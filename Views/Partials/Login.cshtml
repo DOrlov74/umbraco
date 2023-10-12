@@ -1,0 +1,49 @@
+﻿@using UmbracoProject2.Controllers
+@model UmbracoProject2.Models.User
+@using (Html.BeginUmbracoForm<LoginSurfaceController>(nameof(LoginSurfaceController.Submit)))
+{
+
+
+  <div class="d-flex flex-column align-items-center">
+    @if (TempData["LogginSuccess"] != null && (bool)TempData["LogginSuccess"])
+    {
+      <div class="alert alert-success" role="alert">
+        You are logged in as @TempData["FirstName"] !
+      </div>
+      @if (TempData["EntityId"] != null)
+      {
+        <div class="card rounded-0 p-2" style="width:300px; min-width:250px;">
+          <p class="h6">Your Id: @TempData["EntityId"]</p>
+          <p class="h6">Your First Name: @TempData["FirstName"]</p>
+          <p class="h6">Your Last Name: @TempData["LastName"]</p>
+          <p class="h6">Your Email: @TempData["Email"]</p>
+        </div>
+      }
+    }
+    else 
+    {
+      <div class="card rounded-0" style="width:300px; min-width:250px;">
+        <div class="card-body d-flex flex-column input-group px-4 py-2">
+            <label asp-for="UserName">Username:</label>
+          <input class="px-2" asp-for="UserName" />
+        </div>
+        <div class="card-body d-flex flex-column input-group px-4 py-2">
+            <label asp-for="Password">Password:</label>
+          <input class="px-2" type="password" asp-for="Password" />
+        </div>
+        <div class="card-body text-danger p-1">
+          @Html.ValidationSummary()
+        </div>
+          <div class="card-body text-center p-2">
+            <input class="btn-outline-secondary rounded-3 px-5" style="background-color: white;" type="submit" name="Submit" value="Submit" />
+        </div>
+      </div>
+      @if (TempData["LogginSuccess"] != null )
+      {
+        <div class="alert alert-danger m-2" role="alert">
+          There was an error with your login!
+        </div>
+      }
+  }
+  </div>
+}
